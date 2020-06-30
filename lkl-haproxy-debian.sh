@@ -184,21 +184,22 @@ WantedBy=multi-user.target
 	systemctl daemon-reload
 	systemctl enable lkl-haproxy
 
-	mkdir -p /etc/rc.d/
-	touch /etc/rc.d/rc.local
-	sed -i "s/exit 0/ /ig" /etc/rc.d/rc.local
-	echo -e "\nbash /etc/lklhaproxy/redirect.sh\nexit 0" >> /etc/rc.d/rc.local
-	chmod +x /etc/rc.d/rc.local
+	mkdir -p /etc/
+	touch /etc/rc.local
+	sed -i "s/exit 0/ /ig" /etc/rc.local
+	echo -e "\nbash /etc/lklhaproxy/redirect.sh\nexit 0" >> /etc/rc.local
+	chmod +x /etc/rc.local
 	systemctl status rc-local > /dev/null || (echo "[Unit]
-Description=/etc/rc.d/rc.local
-ConditionFileIsExecutable=/etc/rc.d/rc.local
+Description=/etc/rc.local Compatibility
+ConditionFileIsExecutable=/etc/rc.local
 After=network.target
 
 [Service]
 Type=forking
-ExecStart=/etc/rc.d/rc.local start
+ExecStart=/etc/rc.local start
 TimeoutSec=0
 RemainAfterExit=yes
+SysVStartPriority=99
 " > /etc/systemd/system/rc-local.service && systemctl daemon-reload)
 	systemctl enable rc-local
 }
@@ -234,7 +235,7 @@ uninstall(){
 	rm -rf /etc/lklhaproxy
 	#iptables -F
 	systemctl disable lkl-haproxy
-	sed -i '/bash \/etc\/lklhaproxy\/redirect.sh/d' /etc/rc.d/rc.local
+	sed -i '/bash \/etc\/lklhaproxy\/redirect.sh/d' /etc/rc.local
 	echo -e "${Info} please remember 重启 to stop lkl-haproxy"
 }
 
