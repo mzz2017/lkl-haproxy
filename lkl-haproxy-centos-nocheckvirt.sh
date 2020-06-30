@@ -98,9 +98,9 @@ defaults
 log global
 mode tcp
 option dontlognull
-timeout connect 5000
-timeout client 10000
-timeout server 10000
+timeout connect 5000ms
+timeout client 600s
+timeout server 600s
 
 frontend proxy-in
 bind *:${port1}
@@ -117,9 +117,9 @@ defaults
 log global
 mode tcp
 option dontlognull
-timeout connect 5000
-timeout client 10000
-timeout server 10000
+timeout connect 5000ms
+timeout client 600s
+timeout server 600s
 
 frontend proxy-in
 bind *:${port1}-${port2}
@@ -167,7 +167,7 @@ Description=lkl-haproxy
 [Service]
 Environment=LD_PRELOAD=/etc/lklhaproxy/liblkl-hijack.so
 Environment=LKL_HIJACK_NET_QDISC=root|fq
-Environment=LKL_HIJACK_SYSCTL=\"net.ipv4.tcp_congestion_control=bbrplus;net.ipv4.tcp_wmem=4096 131072 1048576;net.ipv4.neigh.default.gc_stale_time=120;net.ipv4.conf.all.rp_filter=0;net.ipv4.conf.default.rp_filter=0;net.ipv4.conf.default.arp_announce=2;net.ipv4.conf.lo.arp_announce=2;net.ipv4.conf.all.arp_announce=2;net.ipv6.conf.all.disable_ipv6=1;net.ipv6.conf.default.disable_ipv6=1;net.ipv6.conf.lo.disable_ipv6=1;net.ipv4.tcp_retries2=8;net.ipv4.tcp_slow_start_after_idle=0;net.ipv4.tcp_fastopen=3;fs.file-max=1000000;fs.inotify.max_user_instances=8192;net.ipv4.tcp_syncookies=1;net.ipv4.tcp_fin_timeout=30;net.ipv4.tcp_tw_reuse=1;net.ipv4.ip_local_port_range=1024 65000;net.ipv4.tcp_max_syn_backlog=16384;net.ipv4.tcp_max_tw_buckets=6000;net.ipv4.route.gc_timeout=100;net.ipv4.tcp_syn_retries=1;net.ipv4.tcp_synack_retries=1;net.core.somaxconn=32768;net.core.netdev_max_backlog=32768;net.ipv4.tcp_timestamps=0;net.ipv4.tcp_max_orphans=32768;net.ipv4.ip_forward=1\"
+Environment=LKL_HIJACK_SYSCTL=\"net.ipv4.tcp_congestion_control=bbrplus;net.ipv4.tcp_wmem=4096 65536 67108864;net.ipv4.tcp_fastopen=3;net.core.wmem_default=8388608;net.core.wmem_max=16777216\"
 Environment=LKL_HIJACK_OFFLOAD=0x9983
 Environment=LKL_HIJACK_NET_IFTYPE=tap
 Environment=LKL_HIJACK_NET_IFPARAMS=lkl-tap
