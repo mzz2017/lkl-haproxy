@@ -99,6 +99,8 @@ log global
 mode tcp
 option dontlognull
 timeout connect 5000ms
+timeout client 600s
+timeout server 600s
 
 frontend proxy-in
 bind *:${port1}
@@ -116,6 +118,8 @@ log global
 mode tcp
 option dontlognull
 timeout connect 5000ms
+timeout client 600s
+timeout server 600s
 
 frontend proxy-in
 bind *:${port1}-${port2}
@@ -183,6 +187,19 @@ WantedBy=multi-user.target
 	sed -i "s/exit 0/ /ig" /etc/rc.d/rc.local
 	echo -e "\nbash /etc/lklhaproxy/redirect.sh" >> /etc/rc.d/rc.local
 	chmod +x /etc/rc.d/rc.local
+	echo "[Unit]
+Description=/etc/rc.d/rc.local
+ConditionFileIsExecutable=/etc/rc.d/rc.local
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/etc/rc.d/rc.local start
+TimeoutSec=0
+RemainAfterExit=yes
+" > /usr/lib/systemd/system/rc-local.service
+	systemctl daemon-reload
+	systemctl enable rc-local
 }
 
 
