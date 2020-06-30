@@ -4,6 +4,17 @@
 
 **NOTICE**: `TUN/TAP` is needed.
 
+## Usage
+
+```bash
+# for centos
+wget --no-check-certificate -O lkl-haproxy.sh https://github.com/mzz2017/lkl-haproxy/raw/master/lkl-haproxy-centos-nocheckvirt.sh && chmod +x lkl-haproxy.sh && ./lkl-haproxy.sh
+
+# for debian
+wget --no-check-certificate -O lkl-haproxy.sh https://github.com/mzz2017/lkl-haproxy/raw/master/lkl-haproxy-debian-nocheckvirt.sh && chmod +x lkl-haproxy.sh && ./lkl-haproxy.sh
+
+```
+
 ## According
 
 中文文档  
