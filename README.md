@@ -15,12 +15,8 @@ bash <(curl -Ls https://github.com/mzz2017/lkl-haproxy/raw/master/lkl-haproxy-de
 
 ```
 
-## According
+## Linux Kernel Library
 
-中文文档  
-https://github.com/tcp-nanqinlang/wiki/wiki/lkl-haproxy
-
-Linux Kernel Library  
 https://github.com/mzz2017/linux
 
 ## Credits
