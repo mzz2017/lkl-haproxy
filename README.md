@@ -1,6 +1,6 @@
 # BBRPLUS lkl-haproxy
 
-`lkl` mode via `haproxy`, worked for `OpenVZ` virtualization.
+`lkl` mode via `haproxy`, works for `OpenVZ` virtualization.
 
 **NOTICE**: `TUN/TAP` is needed.
 
