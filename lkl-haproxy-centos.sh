@@ -179,10 +179,12 @@ WantedBy=multi-user.target
 	systemctl daemon-reload
 	systemctl enable lkl-haproxy
 
+	mkdir -p /etc/rc.d/
+	touch /etc/rc.d/rc.local
 	sed -i "s/exit 0/ /ig" /etc/rc.d/rc.local
-	echo -e "\nbash /etc/lklhaproxy/redirect.sh" >> /etc/rc.d/rc.local
+	echo -e "\nbash /etc/lklhaproxy/redirect.sh\nexit 0" >> /etc/rc.d/rc.local
 	chmod +x /etc/rc.d/rc.local
-	echo "[Unit]
+	systemctl status rc-local > /dev/null || (echo "[Unit]
 Description=/etc/rc.d/rc.local
 ConditionFileIsExecutable=/etc/rc.d/rc.local
 After=network.target
@@ -192,8 +194,7 @@ Type=forking
 ExecStart=/etc/rc.d/rc.local start
 TimeoutSec=0
 RemainAfterExit=yes
-" > /usr/lib/systemd/system/rc-local.service
-	systemctl daemon-reload
+" > /etc/systemd/system/rc-local.service && systemctl daemon-reload)
 	systemctl enable rc-local
 }
 
@@ -207,8 +208,8 @@ install(){
 	directory
 	config
 	check-all
-	run-it-now
 	self-start
+	run-it-now
 	#status
 	echo -e "${Info} 已完成，请稍后使用此脚本第二项判断 lkl 是否成功。"
 }
