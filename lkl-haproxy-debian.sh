@@ -186,6 +186,7 @@ WantedBy=multi-user.target
 
 	mkdir -p /etc/
 	touch /etc/rc.local
+	sed -i '/bash \/etc\/lklhaproxy\/redirect.sh/d' /etc/rc.local
 	sed -i "s/exit 0/ /ig" /etc/rc.local
 	echo -e "\nbash /etc/lklhaproxy/redirect.sh\nexit 0" >> /etc/rc.local
 	chmod +x /etc/rc.local
@@ -201,7 +202,7 @@ TimeoutSec=0
 RemainAfterExit=yes
 SysVStartPriority=99
 " > /etc/systemd/system/rc-local.service && systemctl daemon-reload)
-	systemctl enable rc-local
+	systemctl enable rc-local > /dev/null
 }
 
 
