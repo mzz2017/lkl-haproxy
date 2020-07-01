@@ -131,11 +131,11 @@ server server1 10.0.0.1 maxconn 20480\c" > haproxy.cfg
 }
 
 config-redirect-1(){
-echo "iptables -t nat -A PREROUTING -i venet0 -p tcp --dport ${port1} -j DNAT --to-destination 10.0.0.2" >> redirect.sh
+echo "iptables -t nat -A PREROUTING -i $(awk '$2 == 00000000 { print $1 }' /proc/net/route) -p tcp --dport ${port1} -j DNAT --to-destination 10.0.0.2" >> redirect.sh
 }
 
 config-redirect-2(){
-echo "iptables -t nat -A PREROUTING -i venet0 -p tcp --dport ${port1}:${port2} -j DNAT --to-destination 10.0.0.2" >> redirect.sh
+echo "iptables -t nat -A PREROUTING -i $(awk '$2 == 00000000 { print $1 }' /proc/net/route) -p tcp --dport ${port1}:${port2} -j DNAT --to-destination 10.0.0.2" >> redirect.sh
 }
 
 check-all(){
