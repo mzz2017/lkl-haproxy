@@ -16,7 +16,7 @@ ${Green_font}
 ${Font_suffix}"
 
 check_system(){
-	[[ -z "`cat /etc/redhat-release | grep -iE "CentOS"`" ]] && echo -e "${Error} only support CentOS !" && exit 1
+	[[ -z "`cat /etc/redhat-release | grep -iE "CentOS"`" ]] && echo -e "${Error} only support CentOS !\nYou can find debian script at https://github.com/mzz2017/lkl-haproxy" && exit 1
 	[[ "`uname -m`" != "x86_64" ]] && echo -e "${Error} only support 64 bit !" && exit 1
 }
 
