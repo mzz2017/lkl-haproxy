@@ -10,6 +10,7 @@ ${Green_font}
 # Version: 1.0.1
 # Author: mzz2017
 # Github: https://github.com/mzz2017/lkl-haproxy
+# bash <(curl -Ls https://git.io/JJJE4)
 #================================================
 ${Font_suffix}"
 
