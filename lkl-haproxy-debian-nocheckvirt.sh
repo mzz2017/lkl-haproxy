@@ -7,7 +7,7 @@ ${Green_font}
 #================================================
 # Project: bbrplus lkl-haproxy
 # Platform: --CentOS --openvz --nocheckvirt
-# Version: 1.0.1
+# Version: 1.0.2
 # Author: mzz2017
 # Github: https://github.com/mzz2017/lkl-haproxy
 # bash <(curl -Ls https://git.io/JJJEO)
