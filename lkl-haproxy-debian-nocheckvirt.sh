@@ -6,11 +6,12 @@ echo -e "
 ${Green_font}
 #================================================
 # Project: bbrplus lkl-haproxy
-# Platform: --CentOS --openvz --nocheckvirt
+# Platform: --CentOS --nocheckvirt
 # Version: 1.0.2
 # Author: mzz2017
 # Github: https://github.com/mzz2017/lkl-haproxy
-# bash <(curl -Ls https://git.io/JJJEO)
+#    
+#    bash <(curl -Ls https://git.io/JJJEc)
 #================================================
 ${Font_suffix}"
 
