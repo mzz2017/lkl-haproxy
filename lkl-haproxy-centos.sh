@@ -173,7 +173,7 @@ Environment=LKL_HIJACK_NET_IFPARAMS=lkl-tap
 Environment=LKL_HIJACK_NET_IP=10.0.0.2
 Environment=LKL_HIJACK_NET_NETMASK_LEN=24
 Environment=LKL_HIJACK_NET_GATEWAY=10.0.0.1
-Environment=LKL_HIJACK_BOOT_CMDLINE=mem=1G
+Environment=LKL_HIJACK_BOOT_CMDLINE=mem=150M
 
 ExecStart=$(which haproxy) -f /etc/lklhaproxy/haproxy.cfg
 Restart=always
