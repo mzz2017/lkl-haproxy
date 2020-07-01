@@ -147,6 +147,9 @@ check-all(){
 	[[ ! -f liblkl-hijack.so ]] && wget https://github.com/mzz2017/lkl-haproxy/raw/master/mod/liblkl-hijack.so
 	[[ ! -f liblkl-hijack.so ]] && echo -e "${Error} download lkl.mod failed, please check !" && exit 1
 
+	# check which
+	which --help > /dev/null || yum install -y which
+
 	# check haproxy
 	yum install -y iptables bc haproxy
 
