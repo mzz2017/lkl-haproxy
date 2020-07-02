@@ -39,7 +39,7 @@ check_tuntap(){
 
 	cat /dev/net/tun
 
-	echo -e "${Info} 请确认上一行的返回值是否为 'File descriptor in bad state' ？"
+	echo -e "${Info} 请确认上一行的返回值是否为 'File descriptor in bad state'（文件描述符处于错误状态） ？"
 	echo -e "1.是\n2.否"
 	read -p "输入数字以选择:" tuntap
 
