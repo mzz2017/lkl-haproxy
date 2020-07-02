@@ -148,6 +148,9 @@ check-all(){
 	[[ ! -f liblkl-hijack.so ]] && wget https://github.com/mzz2017/lkl-haproxy/raw/master/mod/liblkl-hijack.so
 	[[ ! -f liblkl-hijack.so ]] && echo -e "${Error} download lkl.mod failed, please check !" && exit 1
 
+	# check wget
+	wget --help > /dev/null || apt-get install -y wget
+
 	# check haproxy
 	apt-get install -y iptables bc haproxy
 
@@ -187,23 +190,24 @@ WantedBy=multi-user.target
 	systemctl daemon-reload
 	systemctl enable lkl-haproxy
 
-	mkdir -p /etc/
-	touch /etc/rc.local
-	sed -i '/bash \/etc\/lklhaproxy\/redirect.sh/d' /etc/rc.local
-	sed -i "s/exit 0/ /ig" /etc/rc.local
-	echo -e "\nbash /etc/lklhaproxy/redirect.sh\nexit 0" >> /etc/rc.local
-	chmod +x /etc/rc.local
+	rclocaldir=/etc/rc.d
+	(systemctl status rc-local|grep /etc/rc.local)>/dev/null && rclocaldir=/etc
+	mkdir -p $rclocaldir
+	touch $rclocaldir/rc.local
+	sed -i '/bash \/etc\/lklhaproxy\/redirect.sh/d' $rclocaldir/rc.local
+	sed -i "s/exit 0/ /ig" $rclocaldir/rc.local
+	echo -e "\nbash /etc/lklhaproxy/redirect.sh\nexit 0" >> $rclocaldir/rc.local
+	chmod +x $rclocaldir/rc.local
 	systemctl status rc-local > /dev/null || (echo "[Unit]
-Description=/etc/rc.local Compatibility
-ConditionFileIsExecutable=/etc/rc.local
+Description=$rclocaldir/rc.local
+ConditionFileIsExecutable=$rclocaldir/rc.local
 After=network.target
 
 [Service]
 Type=forking
-ExecStart=/etc/rc.local start
+ExecStart=$rclocaldir/rc.local start
 TimeoutSec=0
 RemainAfterExit=yes
-SysVStartPriority=99
 " > /etc/systemd/system/rc-local.service && systemctl daemon-reload)
 	systemctl enable rc-local > /dev/null
 }

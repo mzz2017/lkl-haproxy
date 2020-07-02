@@ -146,6 +146,9 @@ check-all(){
 	# check which
 	which --help > /dev/null || yum install -y which
 
+	# check wget
+	wget --help > /dev/null || yum install -y wget
+
 	# check haproxy
 	yum install -y iptables bc haproxy
 
@@ -185,20 +188,22 @@ WantedBy=multi-user.target
 	systemctl daemon-reload
 	systemctl enable lkl-haproxy
 
-	mkdir -p /etc/rc.d/
-	touch /etc/rc.d/rc.local
-	sed -i '/bash \/etc\/lklhaproxy\/redirect.sh/d' /etc/rc.local
-	sed -i "s/exit 0/ /ig" /etc/rc.d/rc.local
-	echo -e "\nbash /etc/lklhaproxy/redirect.sh\nexit 0" >> /etc/rc.d/rc.local
-	chmod +x /etc/rc.d/rc.local
+	rclocaldir=/etc/rc.d
+	(systemctl status rc-local|grep /etc/rc.local)>/dev/null && rclocaldir=/etc
+	mkdir -p $rclocaldir
+	touch $rclocaldir/rc.local
+	sed -i '/bash \/etc\/lklhaproxy\/redirect.sh/d' $rclocaldir/rc.local
+	sed -i "s/exit 0/ /ig" $rclocaldir/rc.local
+	echo -e "\nbash /etc/lklhaproxy/redirect.sh\nexit 0" >> $rclocaldir/rc.local
+	chmod +x $rclocaldir/rc.local
 	systemctl status rc-local > /dev/null || (echo "[Unit]
-Description=/etc/rc.d/rc.local
-ConditionFileIsExecutable=/etc/rc.d/rc.local
+Description=$rclocaldir/rc.local
+ConditionFileIsExecutable=$rclocaldir/rc.local
 After=network.target
 
 [Service]
 Type=forking
-ExecStart=/etc/rc.d/rc.local start
+ExecStart=$rclocaldir/rc.local start
 TimeoutSec=0
 RemainAfterExit=yes
 " > /etc/systemd/system/rc-local.service && systemctl daemon-reload)
@@ -236,7 +241,7 @@ uninstall(){
 	rm -rf /etc/lklhaproxy
 	#iptables -F
 	systemctl disable lkl-haproxy
-	sed -i '/bash \/etc\/lklhaproxy\/redirect.sh/d' /etc/rc.d/rc.local
+	sed -i '/bash \/etc\/lklhaproxy\/redirect.sh/d' $rclocaldir/rc.local
 	echo -e "${Info} please remember 重启 to stop lkl-haproxy"
 }
 
