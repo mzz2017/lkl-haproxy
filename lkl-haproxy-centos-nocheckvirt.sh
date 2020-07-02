@@ -156,6 +156,7 @@ check-all(){
 
 	# check haproxy
 	yum install -y iptables bc haproxy
+	which haproxy || echo -e "${Error} failed to install haproxy !" && exit 1
 
 	# give privilege
 	chmod -R +x /etc/lklhaproxy
