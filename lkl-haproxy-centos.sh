@@ -96,8 +96,8 @@ log global
 mode tcp
 option dontlognull
 timeout connect 5000ms
-timeout client 900s
-timeout server 900s
+timeout client 8000s
+timeout server 8000s
 
 frontend proxy-in
 bind *:${port1}
@@ -115,8 +115,8 @@ log global
 mode tcp
 option dontlognull
 timeout connect 5000ms
-timeout client 900s
-timeout server 900s
+timeout client 8000s
+timeout server 8000s
 
 frontend proxy-in
 bind *:${port1}-${port2}
