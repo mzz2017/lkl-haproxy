@@ -100,6 +100,7 @@ defaults
 log global
 mode tcp
 option dontlognull
+option tcpka
 timeout connect 5000ms
 timeout client 8000s
 timeout server 8000s
@@ -119,6 +120,7 @@ defaults
 log global
 mode tcp
 option dontlognull
+option tcpka
 timeout connect 5000ms
 timeout client 8000s
 timeout server 8000s
