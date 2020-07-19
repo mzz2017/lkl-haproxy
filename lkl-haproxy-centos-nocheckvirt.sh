@@ -178,7 +178,7 @@ Description=lkl-haproxy
 [Service]
 Environment=LD_PRELOAD=/etc/lklhaproxy/liblkl-hijack.so
 Environment=LKL_HIJACK_NET_QDISC=root|fq
-Environment=\"LKL_HIJACK_SYSCTL=net.ipv4.tcp_congestion_control=bbrplus;net.ipv4.tcp_wmem=4096 65536 67108864;net.ipv4.tcp_sack=1;net.core.wmem_default=8388608;net.core.wmem_max=16777216;net.ipv4.tcp_mem=94500000 915000000 927000000;net.ipv4.tcp_slow_start_after_idle=0\"
+Environment=\"LKL_HIJACK_SYSCTL=net.ipv4.tcp_congestion_control=bbrplus;net.ipv4.tcp_wmem=4096 131072 6048576;net.ipv4.tcp_sack=1;net.core.wmem_default=8388608;net.core.wmem_max=16777216;net.ipv4.tcp_mem=94500000 915000000 927000000;net.ipv4.tcp_slow_start_after_idle=0\"
 Environment=LKL_HIJACK_OFFLOAD=0x9983
 Environment=LKL_HIJACK_NET_IFTYPE=tap
 Environment=LKL_HIJACK_NET_IFPARAMS=lkl-tap
