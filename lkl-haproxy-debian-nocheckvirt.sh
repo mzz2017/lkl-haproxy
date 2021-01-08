@@ -7,11 +7,9 @@ ${Green_font}
 #================================================
 # Project: bbrplus lkl-haproxy
 # Platform: --CentOS --nocheckvirt
-# Version: 1.0.4
+# Version: 1.0.5
 # Author: mzz2017
 # Github: https://github.com/mzz2017/lkl-haproxy
-#    
-#    bash <(curl -Ls https://git.io/JJJEc)
 #================================================
 ${Font_suffix}"
 
