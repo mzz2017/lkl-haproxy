@@ -164,7 +164,7 @@ check-all(){
 
 # start immediately
 run-it-now(){
-	systemctl start lkl-haproxy
+	systemctl restart lkl-haproxy
 }
 
 # start with reboot
