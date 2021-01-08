@@ -7,7 +7,7 @@ ${Green_font}
 #================================================
 # Project: bbrplus lkl-haproxy
 # Platform: --CentOS --nocheckvirt
-# Version: 1.0.3
+# Version: 1.0.4
 # Author: mzz2017
 # Github: https://github.com/mzz2017/lkl-haproxy
 #    
@@ -185,9 +185,10 @@ Environment=LKL_HIJACK_NET_IFPARAMS=lkl-tap
 Environment=LKL_HIJACK_NET_IP=10.0.0.2
 Environment=LKL_HIJACK_NET_NETMASK_LEN=24
 Environment=LKL_HIJACK_NET_GATEWAY=10.0.0.1
-Environment=LKL_HIJACK_BOOT_CMDLINE=mem=256M
+Environment=LKL_HIJACK_BOOT_CMDLINE=mem=200M
 
 ExecStart=$(which haproxy) -f /etc/lklhaproxy/haproxy.cfg
+ExecStartPre=/etc/lklhaproxy/redirect.sh
 Restart=always
   
 [Install]
@@ -195,27 +196,6 @@ WantedBy=multi-user.target
 " > /etc/systemd/system/lkl-haproxy.service
 	systemctl daemon-reload
 	systemctl enable lkl-haproxy
-
-	rclocaldir=/etc/rc.d
-	(systemctl status rc-local|grep /etc/rc.local)>/dev/null && rclocaldir=/etc
-	mkdir -p $rclocaldir
-	touch $rclocaldir/rc.local
-	sed -i '/bash \/etc\/lklhaproxy\/redirect.sh/d' $rclocaldir/rc.local
-	sed -i "s/exit 0/ /ig" $rclocaldir/rc.local
-	echo -e "\nbash /etc/lklhaproxy/redirect.sh\nexit 0" >> $rclocaldir/rc.local
-	chmod +x $rclocaldir/rc.local
-	systemctl status rc-local > /dev/null || (echo "[Unit]
-Description=$rclocaldir/rc.local
-ConditionFileIsExecutable=$rclocaldir/rc.local
-After=network.target
-
-[Service]
-Type=forking
-ExecStart=$rclocaldir/rc.local start
-TimeoutSec=0
-RemainAfterExit=yes
-" > /etc/systemd/system/rc-local.service && systemctl daemon-reload)
-	systemctl enable rc-local > /dev/null
 }
 
 
