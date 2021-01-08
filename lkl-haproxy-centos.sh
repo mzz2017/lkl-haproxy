@@ -68,7 +68,7 @@ config(){
 	done
 
 	# download unfully-config-redirect
-	wget https://github.com/mzz2017/lkl-haproxy/raw/master/requirement/redirect.sh
+	wget https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/redirect.sh
 
 	# config: haproxy && redirect
 	if [[ "${choose}" == "1" ]]; then
@@ -142,7 +142,7 @@ check-all(){
 	[[ ! -f redirect.sh ]] && echo -e "${Error} not found redirect config, please check !" && exit 1
 
 	# check lkl-mod
-	[[ ! -f liblkl-hijack.so ]] && wget https://github.com/mzz2017/lkl-haproxy/raw/master/mod/liblkl-hijack.so
+	[[ ! -f liblkl-hijack.so ]] && wget https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/mod/liblkl-hijack.so
 	[[ ! -f liblkl-hijack.so ]] && echo -e "${Error} download lkl.mod failed, please check !" && exit 1
 
 	# check which
