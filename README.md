@@ -2,7 +2,7 @@
 
 `lkl` mode via `haproxy`, works for `OpenVZ` virtualization.
 
-**NOTICE**: `TUN/TAP` is needed. `256M free memory` is needed.
+**NOTICE**: `TUN/TAP` is needed. `256M free memory` is needed. 不建议512MB以下内存的机器使用，内存不充裕的机器建议开启交换空间。
 
 ## Usage
 
