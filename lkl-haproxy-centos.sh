@@ -160,7 +160,6 @@ check-all(){
 # start immediately
 run-it-now(){
 	systemctl start lkl-haproxy
-	bash /etc/lklhaproxy/redirect.sh
 }
 
 # start with reboot
