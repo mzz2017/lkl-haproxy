@@ -323,6 +323,7 @@ status(){
 uninstall(){
 	check_system
 	check_root
+	rm -rf /etc/lklhaproxy
 	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && ["`cat /etc/redhat-release | grep -iE "centos"`" ])
 	then
 		pkg_uninstall haproxy
@@ -333,7 +334,6 @@ uninstall(){
 		echo -e "不支持的 linux 发行版: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
 		exit 1
 	fi
-	rm -rf /etc/lklhaproxy
 	#iptables -F
 	echo -e "${Info} 请记得重启以停止 lkl bbrplus"
 }
