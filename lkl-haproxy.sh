@@ -17,7 +17,7 @@ pkg_update(){
 	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ]
 	then
 		apt-get update
-	elif [ "`cat /etc/redhat-release | grep -iE "centos"`" ]
+	elif [ -f "/etc/redhat-release" ] && [ "`cat /etc/redhat-release | grep -iE "centos"`" ]
 	then
 		yum update
 	elif [ "`cat /etc/issue | grep -iE "alpine"`" ]
@@ -39,7 +39,7 @@ pkg_install(){
 	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ]
 	then
 		apt-get install -y $@
-	elif [ "`cat /etc/redhat-release | grep -iE "centos"`" ]
+	elif [ -f "/etc/redhat-release" ] && [ "`cat /etc/redhat-release | grep -iE "centos"`" ]
 	then
 		yum install -y $@
 	elif [ "`cat /etc/issue | grep -iE "alpine"`" ]
@@ -55,7 +55,7 @@ pkg_uninstall(){
 	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ]
 	then
 		apt-get remove -y $@
-	elif [ "`cat /etc/redhat-release | grep -iE "centos"`" ]
+	elif [ -f "/etc/redhat-release" ] && [ "`cat /etc/redhat-release | grep -iE "centos"`" ]
 	then
 		yum remove -y $@
 	elif [ "`cat /etc/issue | grep -iE "alpine"`" ]
@@ -69,7 +69,7 @@ pkg_uninstall(){
 
 
 start(){
-	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ["`cat /etc/redhat-release | grep -iE "centos"`" ]
+	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && ["`cat /etc/redhat-release | grep -iE "centos"`" ])
 	then
 		systemctl restart lkl-haproxy
 	elif [ "`cat /etc/issue | grep -iE "alpine"`" ]
@@ -82,7 +82,7 @@ start(){
 }
 
 autostart(){
-	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ["`cat /etc/redhat-release | grep -iE "centos"`" ]
+	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && ["`cat /etc/redhat-release | grep -iE "centos"`" ])
 	then
 		wget --no-cache -O /etc/systemd/system/lkl-haproxy.service https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/lkl-haproxy.service
 		systemctl daemon-reload
@@ -110,7 +110,7 @@ check_root(){
 # glibc
 check_ldd(){
 	#ldd=`ldd --version | grep ldd | awk '{print $NF}'`
-	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ["`cat /etc/redhat-release | grep -iE "centos"`" ]
+	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && ["`cat /etc/redhat-release | grep -iE "centos"`" ])
 	then
 		if [[ "`ldd --version | grep ldd | awk '{print $NF}'`" < "2.14" ]]
 		then
