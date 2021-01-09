@@ -1,6 +1,6 @@
 # BBRPLUS lkl-haproxy
 
-`lkl-linux`+`haproxy` hack 版本 bbrplus, 在 `OpenVZ` 工作良好。
+`lkl-linux`+`haproxy` hack 版本 bbrplus，在 `OpenVZ` 工作良好。
 
 **注意**: 需要开启 `TUN/TAP` 和至少 `256M` 空闲内存。 不建议低于512MB内存的机器使用，内存不充裕的机器建议开启交换空间。
 
