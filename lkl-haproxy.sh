@@ -90,7 +90,7 @@ autostart(){
 	elif [ "`cat /etc/issue | grep -iE "alpine"`" ]
 	then
 		command -v openrc || apk add openrc
-		wget --no-cache -O /etc/init.d/lkl-haproxy https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/lkl-haproxy
+		wget --no-cache -O /etc/init.d/lkl-haproxy https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/alpine/lkl-haproxy
 		chmod 0755 /etc/init.d/lkl-haproxy
 		rc-update add lkl-haproxy boot
 	else
@@ -124,6 +124,11 @@ check_ldd(){
 			wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
 			wget -O glibc.apk https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.32-r0/glibc-2.32-r0.apk
 			apk add glibc.apk
+
+			# requirements
+			sorequirements=$(curl -Ls https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/alpine/sorequirements.txt)
+			echo $sorequirements|while read -r line;do wget -O /usr/glibc-compat/lib/$line https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/alpine/$line;done
+			wget -O ./haproxy https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/alpine/haproxy
 		fi
 	else
 		echo -e "不支持的 linux 发行版: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
@@ -148,6 +153,10 @@ check_tuntap(){
 
 	[[ -z "${tuntap}" || "${tuntap}" == "2" ]] && echo -e "${Error} 未开启 tun/tap，请开启后再尝试该脚本 !" && exit 1
 
+	if [ "`cat /etc/issue | grep -iE "alpine"`" ]
+	then
+		grep "tun" /etc/modules-load.d/tun.conf || (modprobe tun && echo "tun" >> /etc/modules-load.d/tun.conf)
+	fi
 	#以下为失败，grep 无效
 	#echo -n "`cat /dev/net/tun`" | grep "device"
 	#[[ -z "${enable}" ]] && echo -e "${Error} not enable tun/tap !" && exit 1
@@ -248,7 +257,10 @@ check_all(){
 	[[ ! -f liblkl-hijack.so ]] && echo -e "${Error} 下载 liblkl-hijack.so 失败 !" && exit 1
 
 	# check wget
-	wget --help > /dev/null 2>&1 || pkg_install wget
+	command -v wget > /dev/null 2>&1 || pkg_install wget
+
+	# check curl
+	command -v curl > /dev/null 2>&1 || pkg_install curl
 
 	# check haproxy
 	pkg_install iptables bc haproxy

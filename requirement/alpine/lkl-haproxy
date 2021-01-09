@@ -1,6 +1,5 @@
 #!/sbin/openrc-run
 
-extra_commands="checkconfig"
 command=/etc/lklhaproxy/redirect.sh
 
 PIDFILE=/var/run/${SVCNAME}.pid
@@ -13,17 +12,12 @@ depend() {
 
 start() {
 	ebegin "Starting ${SVCNAME}"
-    start-stop-daemon --background --start --make-pidfile --pidfile "${PIDFILE}" --exec /etc/lklhaproxy/redirect.sh
+    start-stop-daemon --background --start --make-pidfile --pidfile "${PIDFILE}" --exec $command /etc/lklhaproxy/haproxy
 	eend $?
 }
 
 stop() {
 	ebegin "Stopping ${SVCNAME}"
-
-	if [ "${RC_CMD}" = "restart" ]; then
-		checkconfig || return 1
-	fi
-
 	start-stop-daemon --stop --pidfile "${PIDFILE}"
 	eend $?
 }
