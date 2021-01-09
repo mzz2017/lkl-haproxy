@@ -81,7 +81,7 @@ start(){
 	fi
 }
 
-autostart(){
+enable(){
 	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && ["`cat /etc/redhat-release | grep -iE "centos"`" ])
 	then
 		wget --no-cache -O /etc/systemd/system/lkl-haproxy.service https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/lkl-haproxy.service
@@ -93,6 +93,19 @@ autostart(){
 		wget --no-cache -O /etc/init.d/lkl-haproxy https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/alpine/lkl-haproxy
 		chmod 0755 /etc/init.d/lkl-haproxy
 		rc-update add lkl-haproxy boot
+	else
+		echo -e "不支持的 linux 发行版: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
+		exit 1
+	fi
+}
+
+disable(){
+	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && ["`cat /etc/redhat-release | grep -iE "centos"`" ])
+	then
+		systemctl disable lkl-haproxy
+	elif [ "`cat /etc/issue | grep -iE "alpine"`" ]
+	then
+		rc-update del lkl-haproxy boot
 	else
 		echo -e "不支持的 linux 发行版: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
 		exit 1
@@ -282,7 +295,7 @@ install(){
 	workdir
 	config
 	check_all
-	autostart
+	enable
 	start
 	#status
 	echo -e "${Info} 已完成，请稍后使用此脚本第二项判断 lkl 是否成功。"
@@ -302,7 +315,6 @@ uninstall(){
 	pkg_uninstall haproxy
 	rm -rf /etc/lklhaproxy
 	#iptables -F
-	systemctl disable lkl-haproxy
 	echo -e "${Info} 请记得重启以停止 lkl bbrplus"
 }
 
