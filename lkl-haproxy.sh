@@ -31,14 +31,14 @@ pkg_update(){
 }
 
 pkg_install(){
-	if [[ -z Updated ]]
+	if [[ -z $Updated ]]
 	then
 		pkg_update
 	fi
 
 	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ]
 	then
-		apt-get intsall -y $@
+		apt-get install -y $@
 	elif [ "`cat /etc/issue | grep -iE "centos"`" ]
 	then
 		yum install -y $@
