@@ -174,7 +174,7 @@ config(){
 	done
 
 	# download unfully-config-redirect
-	wget --no-cache https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/redirect.sh
+	[[ ! -f redirect.sh ]] && wget --no-cache -O redirect.sh https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/redirect.sh
 
 	# config: haproxy && redirect
 	if [[ "${choose}" == "1" ]]; then
