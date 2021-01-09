@@ -7,9 +7,11 @@ ${Green_font}
 #================================================
 # Project: bbrplus lkl-haproxy
 # Platform: --CentOS --nocheckvirt
-# Version: 1.0.5
+# Version: 1.0.3
 # Author: mzz2017
 # Github: https://github.com/mzz2017/lkl-haproxy
+#
+#    bash <(curl -Ls https://git.io/JJJEc)
 #================================================
 ${Font_suffix}"
 
@@ -70,7 +72,7 @@ config(){
 	done
 
 	# download unfully-config-redirect
-	wget https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/redirect.sh
+	wget https://github.com/mzz2017/lkl-haproxy/raw/2020e4ab4e167d771fb3545dd094a471619978bc/requirement/redirect.sh
 
 	# config: haproxy && redirect
 	if [[ "${choose}" == "1" ]]; then
@@ -132,11 +134,11 @@ server server1 10.0.0.1 maxconn 20480\c" > haproxy.cfg
 }
 
 config-redirect-1(){
-sed -i "20i\iptables -t nat -I PREROUTING -i $(awk '$2 == 00000000 { print $1 }' /proc/net/route) -p tcp --dport ${port1} -j DNAT --to-destination 10.0.0.2" redirect.sh
+echo "iptables -t nat -A PREROUTING -i $(awk '$2 == 00000000 { print $1 }' /proc/net/route) -p tcp --dport ${port1} -j DNAT --to-destination 10.0.0.2" >> redirect.sh
 }
 
 config-redirect-2(){
-sed -i "20i\iptables -t nat -I PREROUTING -i $(awk '$2 == 00000000 { print $1 }' /proc/net/route) -p tcp --dport ${port1}:${port2} -j DNAT --to-destination 10.0.0.2" redirect.sh
+echo "iptables -t nat -A PREROUTING -i $(awk '$2 == 00000000 { print $1 }' /proc/net/route) -p tcp --dport ${port1}:${port2} -j DNAT --to-destination 10.0.0.2" >> redirect.sh
 }
 
 check-all(){
@@ -145,7 +147,7 @@ check-all(){
 	[[ ! -f redirect.sh ]] && echo -e "${Error} not found redirect config, please check !" && exit 1
 
 	# check lkl-mod
-	[[ ! -f liblkl-hijack.so ]] && wget https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/mod/liblkl-hijack.so
+	[[ ! -f liblkl-hijack.so ]] && wget https://github.com/mzz2017/lkl-haproxy/raw/2020e4ab4e167d771fb3545dd094a471619978bc/mod/liblkl-hijack.so
 	[[ ! -f liblkl-hijack.so ]] && echo -e "${Error} download lkl.mod failed, please check !" && exit 1
 
 	# check which
@@ -164,7 +166,8 @@ check-all(){
 
 # start immediately
 run-it-now(){
-	systemctl restart lkl-haproxy
+	systemctl start lkl-haproxy
+	bash /etc/lklhaproxy/redirect.sh
 }
 
 # start with reboot
@@ -173,15 +176,46 @@ self-start(){
 Description=lkl-haproxy
 
 [Service]
-ExecStart=/etc/lklhaproxy/redirect.sh
+Environment=LD_PRELOAD=/etc/lklhaproxy/liblkl-hijack.so
+Environment=LKL_HIJACK_NET_QDISC=root|fq
+Environment=\"LKL_HIJACK_SYSCTL=net.ipv4.tcp_congestion_control=bbrplus;net.ipv4.tcp_wmem=4096 131072 6048576;net.ipv4.tcp_sack=1;net.core.wmem_default=8388608;net.core.wmem_max=16777216;net.ipv4.tcp_mem=94500000 915000000 927000000;net.ipv4.tcp_slow_start_after_idle=0\"
+Environment=LKL_HIJACK_OFFLOAD=0x9983
+Environment=LKL_HIJACK_NET_IFTYPE=tap
+Environment=LKL_HIJACK_NET_IFPARAMS=lkl-tap
+Environment=LKL_HIJACK_NET_IP=10.0.0.2
+Environment=LKL_HIJACK_NET_NETMASK_LEN=24
+Environment=LKL_HIJACK_NET_GATEWAY=10.0.0.1
+Environment=LKL_HIJACK_BOOT_CMDLINE=mem=256M
+
+ExecStart=$(which haproxy) -f /etc/lklhaproxy/haproxy.cfg
 Restart=always
   
 [Install]
 WantedBy=multi-user.target
-
 " > /etc/systemd/system/lkl-haproxy.service
 	systemctl daemon-reload
 	systemctl enable lkl-haproxy
+
+	rclocaldir=/etc/rc.d
+	(systemctl status rc-local|grep /etc/rc.local)>/dev/null && rclocaldir=/etc
+	mkdir -p $rclocaldir
+	touch $rclocaldir/rc.local
+	sed -i '/bash \/etc\/lklhaproxy\/redirect.sh/d' $rclocaldir/rc.local
+	sed -i "s/exit 0/ /ig" $rclocaldir/rc.local
+	echo -e "\nbash /etc/lklhaproxy/redirect.sh\nexit 0" >> $rclocaldir/rc.local
+	chmod +x $rclocaldir/rc.local
+	systemctl status rc-local > /dev/null || (echo "[Unit]
+Description=$rclocaldir/rc.local
+ConditionFileIsExecutable=$rclocaldir/rc.local
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=$rclocaldir/rc.local start
+TimeoutSec=0
+RemainAfterExit=yes
+" > /etc/systemd/system/rc-local.service && systemctl daemon-reload)
+	systemctl enable rc-local > /dev/null
 }
 
 
@@ -215,6 +249,7 @@ uninstall(){
 	rm -rf /etc/lklhaproxy
 	#iptables -F
 	systemctl disable lkl-haproxy
+	sed -i '/bash \/etc\/lklhaproxy\/redirect.sh/d' /etc/rc.d/rc.local
 	echo -e "${Info} please remember 重启 to stop lkl-haproxy"
 }
 
