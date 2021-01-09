@@ -1,10 +1,12 @@
 # BBRPLUS lkl-haproxy
 
-`lkl` mode via `haproxy`, works for `OpenVZ` virtualization.
+`lkl-linux`+`haproxy` hack 版本 bbrplus, 在 `OpenVZ` 工作良好。
 
-**NOTICE**: `TUN/TAP` is needed. `256M free memory` is needed. 不建议512MB以下内存的机器使用，内存不充裕的机器建议开启交换空间。
+**注意**: 需要开启 `TUN/TAP` 和至少 `256M` 空闲内存。 不建议低于512MB内存的机器使用，内存不充裕的机器建议开启交换空间。
 
-## Usage
+## 使用方法
+
+支持 Alpine / Debian / Ubuntu / CentOS
 
 ```bash
 wget --no-cache -O lkl-haproxy.sh https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/lkl-haproxy.sh && bash lkl-haproxy.sh
@@ -14,7 +16,7 @@ wget --no-cache -O lkl-haproxy.sh https://raw.githubusercontent.com/mzz2017/lkl-
 
 https://github.com/mzz2017/linux
 
-## Credits
+## 感谢
 
 [tcp-nanqinlang/lkl-haproxy](https://github.com/tcp-nanqinlang/lkl-haproxy)
 
