@@ -1,0 +1,9 @@
+[Unit]
+Description=lkl-haproxy
+
+[Service]
+ExecStart=/etc/lklhaproxy/redirect.sh
+Restart=always
+  
+[Install]
+WantedBy=multi-user.target

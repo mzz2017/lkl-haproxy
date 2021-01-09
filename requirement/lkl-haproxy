@@ -1,0 +1,29 @@
+#!/sbin/openrc-run
+
+extra_commands="checkconfig"
+command=/etc/lkl-haproxy/redirect.sh
+
+PIDFILE=/var/run/${SVCNAME}.pid
+
+depend() {
+	need net
+	after firewall
+	use dns logger
+}
+
+start() {
+	ebegin "Starting ${SVCNAME}"
+    start-stop-daemon --background --start --make-pidfile --pidfile "${PIDFILE}" --exec /etc/lkl-haproxy/redirect.sh
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping ${SVCNAME}"
+
+	if [ "${RC_CMD}" = "restart" ]; then
+		checkconfig || return 1
+	fi
+
+	start-stop-daemon --stop --pidfile "${PIDFILE}"
+	eend $?
+}

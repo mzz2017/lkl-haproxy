@@ -7,12 +7,7 @@
 ## Usage
 
 ```bash
-# for centos
-bash <(curl -Ls https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/lkl-haproxy-centos-nocheckvirt.sh)
-
-# for debian
-bash <(curl -Ls https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/lkl-haproxy-debian-nocheckvirt.sh)
-
+wget --no-cache -O lkl-haproxy.sh https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/lkl-haproxy.sh && bash lkl-haproxy.sh
 ```
 
 ## Linux Kernel Library
