@@ -141,7 +141,6 @@ check_ldd(){
 			# requirements
 			sorequirements=$(curl -Ls https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/alpine/sorequirements.txt)
 			echo $sorequirements|while read -r line;do wget -O /usr/glibc-compat/lib/$line https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/alpine/$line;done
-			wget -O ./haproxy https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/alpine/haproxy
 		fi
 	else
 		echo -e "不支持的 linux 发行版: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
@@ -276,7 +275,19 @@ check_all(){
 	command -v curl > /dev/null 2>&1 || pkg_install curl
 
 	# check haproxy
-	pkg_install iptables bc haproxy
+	pkg_install iptables bc
+	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && ["`cat /etc/redhat-release | grep -iE "centos"`" ])
+	then
+		pkg_install haproxy
+	elif [ "`cat /etc/issue | grep -iE "alpine"`" ]
+	then
+		wget -O ./haproxy https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/alpine/haproxy
+		ln -s /etc/lklhaproxy/haproxy /usr/bin/haproxy
+	else
+		echo -e "不支持的 linux 发行版: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
+		exit 1
+	fi
+
 	command -v haproxy || (echo -e "${Error} 安装 haproxy 失败 !" && exit 1)
 
 	# check iproute2
@@ -312,7 +323,16 @@ status(){
 uninstall(){
 	check_system
 	check_root
-	pkg_uninstall haproxy
+	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && ["`cat /etc/redhat-release | grep -iE "centos"`" ])
+	then
+		pkg_uninstall haproxy
+	elif [ "`cat /etc/issue | grep -iE "alpine"`" ]
+	then
+		[ ! -f /usr/bin/haproxy ] && ls /usr/bin/haproxy && rm /usr/bin/haproxy
+	else
+		echo -e "不支持的 linux 发行版: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
+		exit 1
+	fi
 	rm -rf /etc/lklhaproxy
 	#iptables -F
 	echo -e "${Info} 请记得重启以停止 lkl bbrplus"
