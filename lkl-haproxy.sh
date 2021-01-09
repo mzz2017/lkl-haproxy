@@ -5,9 +5,9 @@ Error="${Red_font}[Error]${Font_suffix}"
 echo -e "
 ${Green_font}
 #================================================
-# Project: bbrplus lkl-haproxy
-# Version: 1.0.6
-# Author: mzz2017
+# 脚本: bbrplus lkl-haproxy
+# 版本: 1.0.6
+# 作者: mzz2017
 # Github: https://github.com/mzz2017/lkl-haproxy
 #================================================
 ${Font_suffix}"
@@ -24,7 +24,7 @@ pkg_update(){
 	then
 		apk update
 	else
-		echo -e "Unsupported linux distribution: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
+		echo -e "不支持的 linux 发行版: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
 		exit 1
 	fi
 	Updated="1"
@@ -46,7 +46,7 @@ pkg_install(){
 	then
 		apk add $@
 	else
-		echo -e "Unsupported linux distribution: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
+		echo -e "不支持的 linux 发行版: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
 		exit 1
 	fi
 }
@@ -62,7 +62,7 @@ pkg_uninstall(){
 	then
 		apk del $@
 	else
-		echo -e "Unsupported linux distribution: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
+		echo -e "不支持的 linux 发行版: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
 		exit 1
 	fi
 }
@@ -76,7 +76,7 @@ start(){
 	then
 		rc-service lkl-haproxy restart
 	else
-		echo -e "Unsupported linux distribution: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
+		echo -e "不支持的 linux 发行版: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
 		exit 1
 	fi
 }
@@ -94,22 +94,17 @@ autostart(){
 		chmod 0755 /etc/init.d/lkl-haproxy
 		rc-update add lkl-haproxy boot
 	else
-		echo -e "Unsupported linux distribution: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
+		echo -e "不支持的 linux 发行版: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
 		exit 1
 	fi
 }
 
 check_system(){
-	[[ "`uname -m`" != "x86_64" ]] && echo -e "${Error} only support x86_64 !" && exit 1
+	[[ "`uname -m`" != "x86_64" ]] && echo -e "${Error} 只支持 x86_64 !" && exit 1
 }
 
 check_root(){
-	[[ "`id -u`" != "0" ]] && echo -e "${Error} must be root user !" && exit 1
-}
-
-check_ovz(){
-	pkg_update && pkg_install virt-what
-	[[ "`virt-what`" != "openvz" ]] && echo -e "${Error} only support OpenVZ !" && exit 1
+	[[ "`id -u`" != "0" ]] && echo -e "${Error} 请使用具有 root 权限的用户 !" && exit 1
 }
 
 # glibc
@@ -119,7 +114,7 @@ check_ldd(){
 	then
 		if [[ "`ldd --version | grep ldd | awk '{print $NF}'`" < "2.14" ]]
 		then
-			echo -e "${Error} version of glibc < 2.14, not support !" && exit 1
+			echo -e "${Error} glibc 版本低于 2.14, 不支持 !" && exit 1
 		fi
 	elif [ "`cat /etc/issue | grep -iE "alpine"`" ]
 	then
@@ -131,7 +126,7 @@ check_ldd(){
 			apk add glibc.apk
 		fi
 	else
-		echo -e "Unsupported linux distribution: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
+		echo -e "不支持的 linux 发行版: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
 		exit 1
 	fi
 }
@@ -245,12 +240,12 @@ sed -i "20i\iptables -t nat -I PREROUTING -i $(awk '$2 == 00000000 { print $1 }'
 
 check_all(){
 	# check config
-	[[ ! -f haproxy.cfg ]] && echo -e "${Error} not found haproxy config, please check !" && exit 1
-	[[ ! -f redirect.sh ]] && echo -e "${Error} not found redirect config, please check !" && exit 1
+	[[ ! -f haproxy.cfg ]] && echo -e "${Error} 出错，没有发现 haproxy.cfg !" && exit 1
+	[[ ! -f redirect.sh ]] && echo -e "${Error} 出错，没有发现 redirect.sh !" && exit 1
 
 	# check lkl-mod
 	[[ ! -f liblkl-hijack.so ]] && wget --no-cache https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/mod/liblkl-hijack.so
-	[[ ! -f liblkl-hijack.so ]] && echo -e "${Error} download lkl.mod failed, please check !" && exit 1
+	[[ ! -f liblkl-hijack.so ]] && echo -e "${Error} 下载 liblkl-hijack.so 失败 !" && exit 1
 
 	# check wget
 	wget --help > /dev/null 2>&1 || pkg_install wget
@@ -270,7 +265,6 @@ check_all(){
 install(){
 	check_system
 	check_root
-	#check_ovz
 	check_ldd
 	check_tuntap
 	workdir
@@ -285,8 +279,8 @@ install(){
 status(){
 	pingstatus=`ping 10.0.0.2 -c 3 | grep ttl`
 	if [[ ! -z "${pingstatus}" ]]; then
-		echo -e "${Info} lkl-haproxy is running !"
-		else echo -e "${Error} lkl-haproxy not running, please check !"
+		echo -e "${Info} lkl-haproxy 正在运行 !"
+		else echo -e "${Error} lkl-haproxy 没有运行 !"
 	fi
 }
 
@@ -297,7 +291,7 @@ uninstall(){
 	rm -rf /etc/lklhaproxy
 	#iptables -F
 	systemctl disable lkl-haproxy
-	echo -e "${Info} please remember 重启 to stop lkl-haproxy"
+	echo -e "${Info} 请记得重启以停止 lkl bbrplus"
 }
 
 
