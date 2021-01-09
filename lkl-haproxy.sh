@@ -252,7 +252,7 @@ check_all(){
 
 	# check haproxy
 	pkg_install iptables bc haproxy
-	command -v haproxy || (echo -e "${Error} failed to install haproxy !" && exit 1)
+	command -v haproxy || (echo -e "${Error} 安装 haproxy 失败 !" && exit 1)
 
 	# check iproute2
 	ip tuntap > /dev/null 2>&1 || pkg_install iproute2
