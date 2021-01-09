@@ -323,6 +323,7 @@ status(){
 uninstall(){
 	check_system
 	check_root
+	disable
 	rm -rf /etc/lklhaproxy
 	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && ["`cat /etc/redhat-release | grep -iE "centos"`" ])
 	then
