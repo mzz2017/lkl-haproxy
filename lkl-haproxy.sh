@@ -6,7 +6,7 @@ echo -e "
 ${Green_font}
 #================================================
 # 脚本: bbrplus lkl-haproxy
-# 版本: 1.0.6
+# 版本: 1.0.7
 # 作者: mzz2017
 # Github: https://github.com/mzz2017/lkl-haproxy
 #================================================
@@ -334,7 +334,7 @@ uninstall(){
 		pkg_uninstall haproxy
 	elif [ "`cat /etc/issue | grep -iE "alpine"`" ]
 	then
-		[ ! -f /usr/bin/haproxy ] && ls /usr/bin/haproxy && rm /usr/bin/haproxy
+		[ ! -f /usr/bin/haproxy ] && ls /usr/bin/haproxy > /dev/null 2&>1 && rm /usr/bin/haproxy
 	else
 		echo -e "不支持的 linux 发行版: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
 		exit 1
