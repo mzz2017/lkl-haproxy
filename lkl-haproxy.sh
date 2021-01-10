@@ -134,13 +134,12 @@ check_ldd(){
 		if [[ ! -f "/usr/glibc-compat/lib/libc.so.6" ]] || [[ "`/usr/glibc-compat/lib/libc.so.6 | grep libc | awk '{print $NF}'`" < "2.14" ]]
 		then
 			# https://github.com/sgerrand/alpine-pkg-glibc
-			wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub
-			wget -O glibc.apk https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.32-r0/glibc-2.32-r0.apk
-			apk add glibc.apk
+			wget -O glibc.apk https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.22-r8/glibc-2.22-r8.apk
+			apk add --allow-untrusted glibc.apk
 
 			# requirements
-			sorequirements=$(curl -Ls https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/alpine/sorequirements.txt)
-			echo $sorequirements|while read -r line;do wget -O /usr/glibc-compat/lib/$line https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/alpine/$line;done
+			wget --no-cache -O sorequirements.txt https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/alpine/sorequirements.txt
+			cat sorequirements.txt | while read -r line;do wget -O /usr/glibc-compat/lib/$line https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/alpine/$line;done
 		fi
 	else
 		echo -e "不支持的 linux 发行版: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
@@ -273,12 +272,6 @@ check_all(){
 	[[ ! -f liblkl-hijack.so ]] && wget --no-cache https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/mod/liblkl-hijack.so
 	[[ ! -f liblkl-hijack.so ]] && echo -e "${Error} 下载 liblkl-hijack.so 失败 !" && exit 1
 
-	# check wget
-	command -v wget > /dev/null 2>&1 || pkg_install wget
-
-	# check curl
-	command -v curl > /dev/null 2>&1 || pkg_install curl
-
 	# check haproxy
 	pkg_install iptables bc
 	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && ["`cat /etc/redhat-release | grep -iE "centos"`" ])
@@ -304,11 +297,17 @@ check_all(){
 
 
 install(){
+	# check wget
+	command -v wget > /dev/null 2>&1 || pkg_install wget
+
+	# check curl
+	command -v curl > /dev/null 2>&1 || pkg_install curl
+
 	check_system
 	check_root
+	workdir
 	check_ldd
 	check_tuntap
-	workdir
 	config
 	check_all
 	enable
