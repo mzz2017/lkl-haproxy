@@ -1,5 +1,8 @@
 [Unit]
 Description=lkl-haproxy
+Documentation=https://github.com/mzz2017/lkl-haproxy
+After=network.target nss-lookup.target
+Wants=network.target nss-lookup.target
 
 [Service]
 ExecStart=/etc/lklhaproxy/redirect.sh
