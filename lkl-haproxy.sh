@@ -151,11 +151,13 @@ check_ldd(){
 check_tuntap(){
 	echo -e "\n"
 
-	[[ -z "${tuntap}" || "${tuntap}" == "2" ]] && echo -e "${Error} 未开启 tun/tap，请开启后再尝试该脚本 !" && exit 1
-
 	if [ "`cat /etc/issue | grep -iE "alpine"`" ]
 	then
-		grep "tun" /etc/modules-load.d/tun.conf || (modprobe tun && echo "tun" >> /etc/modules-load.d/tun.conf)
+		if [ ! -f "/etc/modules-load.d/tun.conf" ]
+		then
+			modprobe tun
+			echo "tun" >> /etc/modules-load.d/tun.conf
+		fi
 	fi
 
 	cat /dev/net/tun
@@ -169,6 +171,9 @@ check_tuntap(){
 		echo -e "${Error} 无效输入"
 		echo -e "${Info} 请重新选择" && read -p "输入数字以选择:" tuntap
 	done
+
+	[[ -z "${tuntap}" || "${tuntap}" == "2" ]] && echo -e "${Error} 未开启 tun/tap，请开启后再尝试该脚本 !" && exit 1
+
 	#以下为失败，grep 无效
 	#echo -n "`cat /dev/net/tun`" | grep "device"
 	#[[ -z "${enable}" ]] && echo -e "${Error} not enable tun/tap !" && exit 1
