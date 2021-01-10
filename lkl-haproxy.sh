@@ -151,6 +151,13 @@ check_ldd(){
 check_tuntap(){
 	echo -e "\n"
 
+	[[ -z "${tuntap}" || "${tuntap}" == "2" ]] && echo -e "${Error} 未开启 tun/tap，请开启后再尝试该脚本 !" && exit 1
+
+	if [ "`cat /etc/issue | grep -iE "alpine"`" ]
+	then
+		grep "tun" /etc/modules-load.d/tun.conf || (modprobe tun && echo "tun" >> /etc/modules-load.d/tun.conf)
+	fi
+
 	cat /dev/net/tun
 
 	echo -e "${Info} 请确认上一行的返回值是否为 'File descriptor in bad state'（文件描述符处于错误状态） ？"
@@ -162,13 +169,6 @@ check_tuntap(){
 		echo -e "${Error} 无效输入"
 		echo -e "${Info} 请重新选择" && read -p "输入数字以选择:" tuntap
 	done
-
-	[[ -z "${tuntap}" || "${tuntap}" == "2" ]] && echo -e "${Error} 未开启 tun/tap，请开启后再尝试该脚本 !" && exit 1
-
-	if [ "`cat /etc/issue | grep -iE "alpine"`" ]
-	then
-		grep "tun" /etc/modules-load.d/tun.conf || (modprobe tun && echo "tun" >> /etc/modules-load.d/tun.conf)
-	fi
 	#以下为失败，grep 无效
 	#echo -n "`cat /dev/net/tun`" | grep "device"
 	#[[ -z "${enable}" ]] && echo -e "${Error} not enable tun/tap !" && exit 1
