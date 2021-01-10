@@ -69,7 +69,7 @@ pkg_uninstall(){
 
 
 start(){
-	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && ["`cat /etc/redhat-release | grep -iE "centos"`" ])
+	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && [ "`cat /etc/redhat-release | grep -iE "centos"`" ])
 	then
 		systemctl restart lkl-haproxy
 	elif [ "`cat /etc/issue | grep -iE "alpine"`" ]
@@ -82,7 +82,7 @@ start(){
 }
 
 enable(){
-	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && ["`cat /etc/redhat-release | grep -iE "centos"`" ])
+	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && [ "`cat /etc/redhat-release | grep -iE "centos"`" ])
 	then
 		wget --no-cache -O /etc/systemd/system/lkl-haproxy.service https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/lkl-haproxy.service
 		systemctl daemon-reload
@@ -100,7 +100,7 @@ enable(){
 }
 
 disable(){
-	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && ["`cat /etc/redhat-release | grep -iE "centos"`" ])
+	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && [ "`cat /etc/redhat-release | grep -iE "centos"`" ])
 	then
 		systemctl disable lkl-haproxy
 	elif [ "`cat /etc/issue | grep -iE "alpine"`" ]
@@ -123,7 +123,7 @@ check_root(){
 # glibc
 check_ldd(){
 	#ldd=`ldd --version | grep ldd | awk '{print $NF}'`
-	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && ["`cat /etc/redhat-release | grep -iE "centos"`" ])
+	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && [ "`cat /etc/redhat-release | grep -iE "centos"`" ])
 	then
 		if [[ "`ldd --version | grep ldd | awk '{print $NF}'`" < "2.14" ]]
 		then
@@ -274,7 +274,7 @@ check_all(){
 
 	# check haproxy
 	pkg_install iptables bc
-	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && ["`cat /etc/redhat-release | grep -iE "centos"`" ])
+	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && [ "`cat /etc/redhat-release | grep -iE "centos"`" ])
 	then
 		pkg_install haproxy
 	elif [ "`cat /etc/issue | grep -iE "alpine"`" ]
@@ -329,7 +329,7 @@ uninstall(){
 	check_root
 	disable
 	rm -rf /etc/lklhaproxy
-	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && ["`cat /etc/redhat-release | grep -iE "centos"`" ])
+	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && [ "`cat /etc/redhat-release | grep -iE "centos"`" ])
 	then
 		pkg_uninstall haproxy
 	elif [ "`cat /etc/issue | grep -iE "alpine"`" ]
