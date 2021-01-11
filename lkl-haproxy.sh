@@ -137,11 +137,10 @@ check_ldd(){
 			# https://github.com/sgerrand/alpine-pkg-glibc
 			wget -O glibc.apk https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.22-r8/glibc-2.22-r8.apk
 			apk add --allow-untrusted glibc.apk
-
-			# requirements
-			wget --no-cache -O sorequirements.txt https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/alpine/sorequirements.txt
-			cat sorequirements.txt | while read -r line;do wget --no-clobber -O /usr/glibc-compat/lib/$line https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/alpine/$line;done
 		fi
+		# requirements
+		wget --no-cache -O sorequirements.txt https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/alpine/sorequirements.txt
+		cat sorequirements.txt | while read -r line;do wget --no-clobber -O /usr/glibc-compat/lib/$line https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/requirement/alpine/$line;done
 	else
 		echo -e "不支持的 linux 发行版: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
 		exit 1
