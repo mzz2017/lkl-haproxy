@@ -9,7 +9,7 @@
 支持 Alpine / Debian / Ubuntu / CentOS
 
 ```bash
-wget --no-cache -O lkl-haproxy.sh https://raw.githubusercontent.com/mzz2017/lkl-haproxy/master/lkl-haproxy.sh && bash lkl-haproxy.sh
+wget --no-cache -O lkl-haproxy.sh https://github.com/mzz2017/lkl-haproxy/raw/master/lkl-haproxy.sh && bash lkl-haproxy.sh
 ```
 
 ## Linux Kernel Library
