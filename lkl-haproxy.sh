@@ -19,7 +19,8 @@ pkg_update(){
 		apt-get update
 	elif [ -f "/etc/redhat-release" ] && [ "`cat /etc/redhat-release | grep -iE "centos"`" ]
 	then
-		yum update
+		# yum update
+		echo "ok"
 	elif [ "`cat /etc/issue | grep -iE "alpine"`" ]
 	then
 		apk update
