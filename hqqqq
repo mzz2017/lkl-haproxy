@@ -1,0 +1,523 @@
+[33mcommit 525b5de85ab10627e2500d5d8d33ecfe897850e4[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: iseki <admin@iseki.space>
+Date:   Tue Feb 9 15:43:11 2021 +0800
+
+    Avoid unexpected uninstall.
+
+[33mcommit cb8ff76649dd7a84f5922b67c16097e91350c3fb[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: mzz <m@mzz.pub>
+Date:   Fri Feb 5 15:00:42 2021 +0800
+
+    Update redirect.sh
+
+[33mcommit d6b9c984f33228acbf088dc971dce558760a36e4[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Mon Jan 11 15:07:09 2021 +0800
+
+    url
+
+[33mcommit ac491efa7f2e3d11b07220fd490995dcb458269a[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Mon Jan 11 15:04:11 2021 +0800
+
+    alpine
+
+[33mcommit 0ac442b461dab4255ebd30bb06cddd7e17818b4a[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Mon Jan 11 14:13:41 2021 +0800
+
+    centos does not need yum update
+
+[33mcommit 8dd8879dbd1a16b965cb6eb5d1eee9f2365af87d[m
+Author: mzz <m@mzz.pub>
+Date:   Mon Jan 11 01:42:55 2021 +0800
+
+    Update lkl-haproxy.service
+
+[33mcommit cb4cb36a935e928fbbb096736fa9f579787ee8f8[m
+Author: mzz <m@mzz.pub>
+Date:   Sun Jan 10 18:50:44 2021 +0800
+
+    Update lkl-haproxy.sh
+    
+    centos
+
+[33mcommit 77a7de7576b0e56a4b93da4862830d610d74e0a6[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sun Jan 10 17:20:35 2021 +0800
+
+    README
+
+[33mcommit aa1d717c27fcc31e2295a26e9cf5e5023df28d32[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sun Jan 10 17:10:06 2021 +0800
+
+    optimize
+
+[33mcommit 2c6e53d81c20d7d2c349883ee3c252ccad854596[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sun Jan 10 16:43:38 2021 +0800
+
+    version
+
+[33mcommit 8239a3eaca3a05de3bda02c96b78525dad87df2e[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sun Jan 10 16:30:54 2021 +0800
+
+    alpine
+
+[33mcommit 31f2b1f93dd23b113b9a26e473eec24833dc2048[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sun Jan 10 16:24:45 2021 +0800
+
+    fix: alpine
+
+[33mcommit ef2405cd5b1ceb71f1ef871c4e061e14f0ef0074[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sun Jan 10 10:06:30 2021 +0800
+
+    alpine: tun
+
+[33mcommit 1dc762cd4c28a277db743435047350cf8b2603e0[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sun Jan 10 10:02:47 2021 +0800
+
+    alpine: tun
+
+[33mcommit 123b2f011b77407ce07ce86fc62695be08008e01[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sun Jan 10 04:46:26 2021 +0800
+
+    u
+
+[33mcommit 493677da496b69dcbec2615677dcc5533bf2d4f1[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sun Jan 10 04:45:18 2021 +0800
+
+    optimize
+
+[33mcommit c9a43b6f619316a2d6e5f1d66aadbc20feea02e7[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sun Jan 10 04:44:46 2021 +0800
+
+    optimize
+
+[33mcommit f753071e47d215ad15de1444ab450ee243cd834f[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sun Jan 10 04:27:29 2021 +0800
+
+    fix
+
+[33mcommit 2c6127a18b9c2694ea6611d62e5fa6fddb9eee95[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sun Jan 10 04:23:57 2021 +0800
+
+    alpine
+
+[33mcommit 3e8adb30d60d5bbcbecdfbe99d1360b47a0e348d[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sat Jan 9 23:43:16 2021 +0800
+
+    update
+
+[33mcommit b130fa748dc004cc8983ac6745f028c793655368[m
+Author: mzz <m@mzz.pub>
+Date:   Sat Jan 9 18:48:29 2021 +0800
+
+    Update lkl-haproxy.sh
+
+[33mcommit 1f4185a1b5a9e2c4feaf77fd351b177a4e3c64f2[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sat Jan 9 18:09:09 2021 +0800
+
+    -mcompatibility with old users
+
+[33mcommit fa3e5951ad382f83cbe5ee21fbfe03eebb34c6f9[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sat Jan 9 18:01:59 2021 +0800
+
+    README: punct
+
+[33mcommit cb3dd8ee0f2f15451fff7517c3fa61393cebeb93[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sat Jan 9 18:00:57 2021 +0800
+
+    docs(README): 汉化
+
+[33mcommit e9938aa05812977bd52c5baf01629d028fcbc231[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sat Jan 9 17:58:25 2021 +0800
+
+    汉化
+
+[33mcommit 0ddb1756b8b117f5539f23099248ca1114bcf618[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sat Jan 9 17:57:51 2021 +0800
+
+    汉化
+
+[33mcommit 04b8c4070cdd36236e9a6c6bf60e69cc3c16fa4e[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sat Jan 9 17:51:42 2021 +0800
+
+    update
+
+[33mcommit 8cbd72e8b3cac9618f3ca44cbc090018c39d8515[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sat Jan 9 17:48:46 2021 +0800
+
+    typo
+
+[33mcommit 8ff3122c6474ee7842961ff5d646529c9e98dfb7[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sat Jan 9 17:45:29 2021 +0800
+
+    support alpine
+
+[33mcommit 33588fba6e98079e240b6865c8176e576c7b00dc[m
+Author: mzz <m@mzz.pub>
+Date:   Sat Jan 9 14:22:03 2021 +0800
+
+    Update lkl-haproxy-debian-nocheckvirt.sh
+
+[33mcommit 2428aeb968930cc0b96808e68fc449a7811613c4[m
+Author: mzz <m@mzz.pub>
+Date:   Sat Jan 9 01:27:05 2021 +0800
+
+    Delete lkl-haproxy-debian.sh
+
+[33mcommit 87fc2527744e6c6e11bd19440b7990a4c8201b50[m
+Author: mzz <m@mzz.pub>
+Date:   Sat Jan 9 01:26:51 2021 +0800
+
+    Delete lkl-haproxy-centos.sh
+
+[33mcommit 88870cb0f7b7ab4ae033cd3d571f2b6303877281[m
+Author: mzz <m@mzz.pub>
+Date:   Sat Jan 9 01:26:33 2021 +0800
+
+    Update lkl-haproxy-centos-nocheckvirt.sh
+
+[33mcommit 6b3b85dd913295532a6d6bcd802b7c6f74fdb553[m
+Author: mzz <m@mzz.pub>
+Date:   Sat Jan 9 01:26:00 2021 +0800
+
+    Update lkl-haproxy-debian-nocheckvirt.sh
+
+[33mcommit adb38573e1b8008524c3e73ac1e7e9aff1d6d41c[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Fri Jan 8 23:33:16 2021 +0800
+
+    #3
+
+[33mcommit e802bc04e73c0b09f060c21b7a1967615bb70e83[m
+Author: mzz <m@mzz.pub>
+Date:   Fri Jan 8 23:32:32 2021 +0800
+
+    Update lkl-haproxy-debian-nocheckvirt.sh
+
+[33mcommit 75d431eb5fc558391f3059b436d1c67d39a93b95[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Fri Jan 8 23:24:53 2021 +0800
+
+    optimize MEM
+
+[33mcommit 166458cf56161018fb71ccf82ac51302ab2153b4[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Fri Jan 8 23:06:39 2021 +0800
+
+    docs
+
+[33mcommit ec3e1b44c7ea03df45beae8da16ce0ddbead52dc[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Fri Jan 8 23:01:26 2021 +0800
+
+    update
+
+[33mcommit b82add273d16d83c1fb9238554cc4fcecd03d346[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Fri Jan 8 22:56:22 2021 +0800
+
+    version
+
+[33mcommit 558abf303c676c9089a03bee4634c930e9f27de1[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Fri Jan 8 22:54:49 2021 +0800
+
+    update
+
+[33mcommit 325ed9ff4a4cbe812e5003c5055fe97ecc686acc[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Fri Jan 8 22:45:54 2021 +0800
+
+    update
+
+[33mcommit d7fce32d5e0823da766d17a6ccbdba4aaea3bdb4[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Fri Jan 8 22:28:07 2021 +0800
+
+    update
+
+[33mcommit 3cd1dcf229ea6286025e506681cc4a2012698ab8[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Fri Jan 8 22:20:57 2021 +0800
+
+    fix bugs
+
+[33mcommit 2020e4ab4e167d771fb3545dd094a471619978bc[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sun Jul 19 10:58:53 2020 +0800
+
+    version
+
+[33mcommit d59ac53b2e534912e54164062ed1276c55214bca[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sun Jul 19 10:57:53 2020 +0800
+
+    lower memory limit
+
+[33mcommit fda84be0ac5bd9833f6e0e9d6b7db53399334854[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sun Jul 19 10:45:28 2020 +0800
+
+    lower memory limit
+
+[33mcommit c6722be3536b31fd6f2adf6d1f9b36439ebfe802[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Sun Jul 12 01:20:24 2020 +0800
+
+    option: tcpka
+
+[33mcommit d8771fe147c0ff81d1f029b57d4d4e50fb9ee1df[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 8 00:08:41 2020 +0800
+
+    set timeout to 8000s to tolerate keepalive packet
+
+[33mcommit d632bd262bd0e94fe0012bec1b80aa2c05262449[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Fri Jul 3 10:28:42 2020 +0800
+
+    fixbug
+
+[33mcommit e39d19950dce6e10beec67dd51d5157818d56987[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Fri Jul 3 00:53:34 2020 +0800
+
+    check if haproxy is installed
+
+[33mcommit 5e0ef560cdb6ccd0e170d35df68e092aad3881ef[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Fri Jul 3 00:37:48 2020 +0800
+
+    avoid replicated redirect
+
+[33mcommit 642fdb1af5f6c4d15954004f561ec90f0ebeb631[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Fri Jul 3 00:00:32 2020 +0800
+
+    docs: tips
+
+[33mcommit bb63c69c8984d5148f66446d8ab5d94c6beb224c[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Thu Jul 2 23:47:36 2020 +0800
+
+    compatibility for kvm
+
+[33mcommit 57255e1c668cb12385297e4bc4147983598b2720[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 22:41:38 2020 +0800
+
+    docs: typo
+
+[33mcommit 44b72eee2b3e3d6b1fa984da6e8b5cb6392da504[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 22:40:00 2020 +0800
+
+    docs
+
+[33mcommit f517a5ce6c70bb37c339215d4b758bb8b75bb387[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 22:32:36 2020 +0800
+
+    docs
+
+[33mcommit 04b21a3cb25178b2fda768d0089f42dd17366da2[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 21:48:40 2020 +0800
+
+    support kvm
+
+[33mcommit 414246c436429b0139d529ae93bb9f032169310c[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 17:12:11 2020 +0800
+
+    adjust memory size
+
+[33mcommit fc16f985262b21b2fc323af0dcf963f6efdd465c[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 17:09:02 2020 +0800
+
+    decrese memory occupation
+
+[33mcommit e2b25d42756910d2e65ff3e371a22f7f004f8491[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 16:55:05 2020 +0800
+
+    check command which
+
+[33mcommit 4b6b898dbd4fa5d3b4e13dcef258edf0fcf31006[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 16:29:12 2020 +0800
+
+    version
+
+[33mcommit a38688dd8c00a97f5778259fb1cf87b7f1791449[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 16:26:17 2020 +0800
+
+    optimize concurrent performance
+
+[33mcommit 13163753ae4eef699e41cb4460582d8636913962[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 12:01:56 2020 +0800
+
+    compatibility
+
+[33mcommit 07e9afbc5411ca50f4b9aef8cc538e079e180108[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 11:57:45 2020 +0800
+
+    add usage to shell greeting
+
+[33mcommit 0130fc697b038cf89f78185973b246596a7c8860[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 11:51:44 2020 +0800
+
+    improve performance
+
+[33mcommit e4d8ba4b2c71f1edc4f913755af68d1d5f393f7c[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 11:08:52 2020 +0800
+
+    fix: compatibility for old kernel
+
+[33mcommit 379cadf065a0e5464ed449439fc4cc9d41ec806d[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 03:24:02 2020 +0800
+
+    README
+
+[33mcommit b116f4c1279ca0aaafe9724e7ed8b6d3cc50a765[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 03:22:20 2020 +0800
+
+    docs(README): typo
+
+[33mcommit 1075a64a3abe255731776d4a85fae23f229342cb[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 03:17:59 2020 +0800
+
+    set timetout a moderate value
+
+[33mcommit 77b9808c00092fa357aa4f3f24b7d4a61481a533[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 03:16:49 2020 +0800
+
+    increse timeout to avoid cut off
+
+[33mcommit e09a403dd37df27d364a1923db0b9ea3341e4523[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 02:55:15 2020 +0800
+
+    docs(README): credits
+
+[33mcommit 6f2dd9f29809b369dec49e041ea4a54ef9767ef9[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 02:52:24 2020 +0800
+
+    docs: README
+
+[33mcommit 88f2d032aafb72a1baa09a4ab95729a7cc86ea32[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 02:46:47 2020 +0800
+
+    docs:README
+
+[33mcommit edbec267f2caeac13acaeb1febc46341d2808cba[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 02:37:28 2020 +0800
+
+    remove redirect.sh in rc.local before installation
+
+[33mcommit a744324f5f2c14c441941f931d708d2cf9fea2e3[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 02:31:58 2020 +0800
+
+    correct the path of rc.local on debian
+
+[33mcommit 0ef61c8cf0c9acde75d17c39df0e12603a3a60f7[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 02:24:31 2020 +0800
+
+    bugs
+
+[33mcommit 9d327d09f43673f65cc01087871c00d19384d255[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 02:16:24 2020 +0800
+
+    rc-local issue
+
+[33mcommit 00e7a07f014b64c24a18289bef78e155b504c924[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 02:00:30 2020 +0800
+
+    remove timeout limit
+
+[33mcommit 43d2d5e014d92997b0baed0165aa4acfbac35e21[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 01:57:36 2020 +0800
+
+    optimize parameters
+
+[33mcommit c84e3697ef54b7957fe4937a1416596aaa609a06[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 01:32:39 2020 +0800
+
+    fix bugs
+
+[33mcommit 6083ed02a64f425f109c630999b4aa897e97fdc2[m
+Author: mzz2017 <m@mzz.pub>
+Date:   Wed Jul 1 00:26:23 2020 +0800
+
+    v1.0.0
+
+[33mcommit a67a221a047b7d7b90e39ef7d4364b132015d308[m
+Author: viceyy <vice752384538@gmail.com>
+Date:   Thu Apr 30 08:34:52 2020 +0800
+
+    Add files via upload
+
+[33mcommit 4bd166609dd29ca69851a71285e8a245201467af[m
+Author: 南琴浪 <26526543+nanqinlang@users.noreply.github.com>
+Date:   Sat Jun 16 23:24:47 2018 +0800
+
+    Update readme.md
+
+[33mcommit bf4e57c10d8ffe1e23036c65704f82cef365e7e1[m
+Author: 南琴浪 <contacts@sometimesnaive.org>
+Date:   Sat May 5 00:24:42 2018 +0800
+
+    readme
+
+[33mcommit 1938784fa81224d3e4917ff0b8cf49398f51849b[m
+Author: nanqinlang <contacts@sometimesnaive.org>
+Date:   Sat May 5 00:11:00 2018 +0800
+
+    rebuild
+
+[33mcommit e344ec308db99ed70e2809daf419679d4eb4bd19[m
+Author: 南琴浪 <contacts@sometimesnaive.org>
+Date:   Fri May 4 23:33:54 2018 +0800
+
+    Initial commit
