@@ -267,6 +267,8 @@ if [[ "${function}" == "1" ]]; then
 	install
 elif [[ "${function}" == "2" ]]; then
 	status
-else
+elif [[ "${function}" == "3" ]]; then
 	uninstall
+else
+	echo "${Error} 读取选项失败，可能是因为当前本脚本不能在当前shell上执行"
 fi
