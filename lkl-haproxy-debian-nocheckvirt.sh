@@ -106,7 +106,7 @@ timeout client 8000s
 timeout server 8000s
 
 frontend proxy-in
-bind *:${port1}
+bind :::${port1} v4v6
 default_backend proxy-out
 
 backend proxy-out
@@ -126,7 +126,7 @@ timeout client 8000s
 timeout server 8000s
 
 frontend proxy-in
-bind *:${port1}-${port2}
+bind :::${port1}-${port2} v4v6
 default_backend proxy-out
 
 backend proxy-out
@@ -135,10 +135,12 @@ server server1 10.0.0.1 maxconn 20480\c" > haproxy.cfg
 
 config-redirect-1(){
 echo "iptables -t nat -A PREROUTING -i $(awk '$2 == 00000000 { print $1 }' /proc/net/route) -p tcp --dport ${port1} -j DNAT --to-destination 10.0.0.2" >> redirect.sh
+echo "ip6tables -t nat -A PREROUTING -i $(awk '$2 == 00000000 { print $1 }' /proc/net/route) -p tcp --dport ${port1} -j DNAT --to-destination fd00::2" >> redirect.sh
 }
 
 config-redirect-2(){
 echo "iptables -t nat -A PREROUTING -i $(awk '$2 == 00000000 { print $1 }' /proc/net/route) -p tcp --dport ${port1}:${port2} -j DNAT --to-destination 10.0.0.2" >> redirect.sh
+echo "ip6tables -t nat -A PREROUTING -i $(awk '$2 == 00000000 { print $1 }' /proc/net/route) -p tcp --dport ${port1}:${port2} -j DNAT --to-destination fd00::2" >> redirect.sh
 }
 
 check-all(){
@@ -182,6 +184,9 @@ Environment=LKL_HIJACK_NET_IFPARAMS=lkl-tap
 Environment=LKL_HIJACK_NET_IP=10.0.0.2
 Environment=LKL_HIJACK_NET_NETMASK_LEN=24
 Environment=LKL_HIJACK_NET_GATEWAY=10.0.0.1
+Environment=LKL_HIJACK_NET_IPV6=fd00::2
+Environment=LKL_HIJACK_NET_GATEWAY6=fd00::1
+Environment=LKL_HIJACK_NET_NETMASK6_LEN=64
 Environment=LKL_HIJACK_BOOT_CMDLINE=mem=256M
 
 ExecStart=$(which haproxy) -f /etc/lklhaproxy/haproxy.cfg
