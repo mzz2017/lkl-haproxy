@@ -4,7 +4,7 @@
 
 **注意**: 
 1. 默认参数下需要至少 `256M` 空闲内存并开启 `TUN/TAP`。
-2. 如有更多内存，可对 `/etc/lklhaproxy/redirect.sh` 中的参数 `net.ipv4.tcp_wmem` 及 `LKL_HIJACK_BOOT_CMDLINE=mem` 进行调优。例如分别修改为：
+2. 如有更多内存，可在安装后对 `/etc/lklhaproxy/redirect.sh` 中的参数 `net.ipv4.tcp_wmem` 及 `LKL_HIJACK_BOOT_CMDLINE=mem` 进行调优。例如分别修改为：
    ```
    net.ipv4.tcp_wmem=4096 32768 4194304
    LKL_HIJACK_BOOT_CMDLINE=mem=512M
@@ -14,6 +14,8 @@
    net.ipv4.tcp_wmem=4096 131072 6048576
    LKL_HIJACK_BOOT_CMDLINE=mem=2048M
    ```
+   而后重启生效。
+3. 对多连接加速更为明显。
 
 ## 使用方法
 
