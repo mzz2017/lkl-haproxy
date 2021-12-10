@@ -11,46 +11,6 @@ ${Green_font}
 # Github: https://github.com/mzz2017/lkl-haproxy
 #================================================
 ${Font_suffix}"
-Updated=""
-
-pkg_update(){
-	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ]
-	then
-		apt-get update
-	elif [ -f "/etc/redhat-release" ] && [ "`cat /etc/redhat-release | grep -iE "centos"`" ]
-	then
-		# yum update
-		echo "ok"
-	elif [ "`cat /etc/issue | grep -iE "alpine"`" ]
-	then
-		apk update
-	else
-		echo -e "不支持的 linux 发行版: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
-		exit 1
-	fi
-	Updated="1"
-}
-
-pkg_install(){
-	if [[ -z $Updated ]]
-	then
-		pkg_update
-	fi
-
-	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ]
-	then
-		apt-get install -y $@
-	elif [ -f "/etc/redhat-release" ] && [ "`cat /etc/redhat-release | grep -iE "centos"`" ]
-	then
-		yum install -y $@
-	elif [ "`cat /etc/issue | grep -iE "alpine"`" ]
-	then
-		apk add $@
-	else
-		echo -e "不支持的 linux 发行版: $(cut -d\\ -f 1 /etc/issue|head -n 1)"
-		exit 1
-	fi
-}
 
 pkg_uninstall(){
 	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ]
@@ -159,19 +119,9 @@ check_tuntap(){
 		fi
 	fi
 
-	cat /dev/net/tun
+	tuntap=$(cat /dev/net/tun 2>&1 | tr '[:upper:]' '[:lower:]')
 
-	echo -e "${Info} 请确认上一行的返回值是否为 'File descriptor in bad state'（文件描述符处于错误状态） ？"
-	echo -e "1.是\n2.否"
-	read -p "输入数字以选择:" tuntap
-
-	while [[ ! "${tuntap}" =~ ^[1-2]$ ]]
-	do
-		echo -e "${Error} 无效输入"
-		echo -e "${Info} 请重新选择" && read -p "输入数字以选择:" tuntap
-	done
-
-	[[ -z "${tuntap}" || "${tuntap}" == "2" ]] && echo -e "${Error} 未开启 tun/tap，请开启后再尝试该脚本 !" && exit 1
+	[[ ! $tuntap =~ 'in bad state' ]] && [[ ! $tuntap =~ '处于错误状态' ]] && echo -e "${Error} 未开启 tun/tap，请开启后再尝试该脚本 !" && exit 1
 
 	#以下为失败，grep 无效
 	#echo -n "`cat /dev/net/tun`" | grep "device"
@@ -275,10 +225,10 @@ check_all(){
 	[[ ! -f liblkl-hijack.so ]] && echo -e "${Error} 下载 liblkl-hijack.so 失败 !" && exit 1
 
 	# check haproxy
-	pkg_install iptables bc
+	${INSTALL[i]} iptables bc
 	if [ "`cat /etc/issue | grep -iE "debian"`" ] || [ "`cat /etc/issue | grep -iE "ubuntu"`" ] || ([ -f "/etc/redhat-release" ] && [ "`cat /etc/redhat-release | grep -iE "centos"`" ])
 	then
-		pkg_install haproxy
+		${INSTALL[i]} haproxy
 	elif [ "`cat /etc/issue | grep -iE "alpine"`" ]
 	then
 		wget -O ./haproxy https://github.com/mzz2017/lkl-haproxy/raw/master/requirement/alpine/haproxy
@@ -291,7 +241,7 @@ check_all(){
 	command -v haproxy || (echo -e "${Error} 安装 haproxy 失败 !" && exit 1)
 
 	# check iproute2
-	ip tuntap > /dev/null 2>&1 || pkg_install iproute2
+	ip tuntap > /dev/null 2>&1 || ${INSTALL[i]} iproute2
 
 	# give privilege
 	chmod -R +x /etc/lklhaproxy
@@ -299,11 +249,14 @@ check_all(){
 
 
 install(){
+	# update
+	${UPDATE[i]}
+	
 	# check wget
-	command -v wget > /dev/null 2>&1 || pkg_install wget
+	command -v wget > /dev/null 2>&1 || ${INSTALL[i]} wget
 
 	# check curl
-	command -v curl > /dev/null 2>&1 || pkg_install curl
+	command -v curl > /dev/null 2>&1 || ${INSTALL[i]} curl
 
 	check_system
 	check_root
@@ -315,7 +268,7 @@ install(){
 	enable
 	start
 	#status
-	echo -e "${Info} 已完成，请稍后使用此脚本第二项判断 lkl 是否成功。"
+	echo -e "${Info} 已完成安装。"
 }
 
 status(){
@@ -345,25 +298,32 @@ uninstall(){
 	echo -e "${Info} 请记得重启以停止 lkl bbrplus"
 }
 
+CMD=(	"$(grep -i pretty_name /etc/os-release 2>/dev/null | cut -d \" -f2)"
+	"$(hostnamectl 2>/dev/null | grep -i system | cut -d : -f2)"
+	"$(lsb_release -sd 2>/dev/null)"
+	"$(grep -i description /etc/lsb-release 2>/dev/null | cut -d \" -f2)"
+	"$(grep . /etc/redhat-release 2>/dev/null)"
+	"$(grep . /etc/issue 2>/dev/null | cut -d \\ -f1 | sed '/^[ ]*$/d')"
+	)
 
+for i in "${CMD[@]}"; do
+	SYS="$i" && [[ -n $SYS ]] && break
+done
 
+REGEX=("debian" "ubuntu" "centos" "alpine")
+RELEASE=("Debian" "Ubuntu" "CentOS" "alpine")
+UPDATE=("apt-get update" "apt-get update" "" "apk update")
+INSTALL=("apt-get install -y" "apt-get install -y" "yum install -y" "apk add")
 
-echo -e "${Info} 选择你要使用的功能: "
-echo -e "1.安装 lkl bbrplus\n2.检查 lkl bbrplus运行状态\n3.卸载 lkl bbrplus"
-read -p "输入数字以选择:" function
+for ((i=0; i<${#REGEX[@]}; i++)); do
+	[[ $(echo "$SYS" | tr '[:upper:]' '[:lower:]') =~ ${REGEX[i]} ]] && SYSTEM="${RELEASE[i]}" && [[ -n $SYSTEM ]] && break
+done
+[[ -z $SYSTEM ]] && echo -e "不支持的 linux 发行版" && exit 1
 
-while [[ ! "${function}" =~ ^[1-3]$ ]]
-	do
-		echo -e "${Error} 无效输入"
-		echo -e "${Info} 请重新选择" && read -p "输入数字以选择:" function
-	done
-
-if [[ "${function}" == "1" ]]; then
-	install
-elif [[ "${function}" == "2" ]]; then
-	status
-elif [[ "${function}" == "3" ]]; then
-	uninstall
-else
-	echo "${Error} 读取选项失败，可能是因为本脚本不能在当前shell上执行"
+if ping 10.0.0.2 -c 2 >/dev/null 2>&1; then
+	echo -e "${Info} lkl-haproxy 正在运行 !\c" && read -rp " 卸载请按 y，按其他键退出: " CHOOSE
+	[[ $CHOOSE != [Yy] ]] && exit 0 || uninstall
+else 
+	echo -e "${Info} lkl-haproxy 没有运行 !\c" && read -rp " 安装请按 y，按其他键退出: " CHOOSE
+	[[ $CHOOSE != [Yy] ]] && exit 0 || install
 fi
